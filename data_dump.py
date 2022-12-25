@@ -2,6 +2,9 @@ import pymongo
 import pandas as pd
 import json
 from sensor.config import mongo_client
+from dotenv import load_dotenv
+print(f"Loading environment variable from .env file")
+load_dotenv()
 
 # Provide the mongodb localhost url to connect python to mongodb.
 #client = pymongo.MongoClient("mongodb+srv://kishor_ineuron:mongodb123@cluster0.yk4yr.mongodb.net/?retryWrites=true&w=majority")
@@ -14,7 +17,7 @@ if __name__ == "__main__":
     df = pd.read_csv(DATA_FILE_PATH)
     print(f"Rows and COlumns:{df.shape}")
     df.reset_index(drop=True, inplace=True)
-
+    #convert the dataframe to json so that we can dump the data into mongoDB 
     json_record = list(json.loads(df.T.to_json()).values())
 
     print(json_record[0])
